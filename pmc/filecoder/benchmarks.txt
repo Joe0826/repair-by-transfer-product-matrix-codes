@@ -1,0 +1,141 @@
+MSR (10MB file. n=50, k=20, d=40 --> alpha=21, B=420)
+===================================================
+Encoding:
+
+Systematic:
+$ time ./encoder_pmc 50 20 40 8 MSR f10M.dat
+Bytes read      : 10240000
+Bytes written   : 25603200
+Coding Time [s] : 8.900
+IO Time [s]     : 0.308
+
+real    0m9.721s
+user    0m8.896s
+sys     0m0.317s
+
+Non-Systematic:
+$ time ./encoder_pmc 50 20 40 8 MSR f10M.dat
+Bytes read      : 10240000
+Bytes written   : 25603200
+Coding Time [s] : 1.488
+IO Time [s]     : 0.164
+
+real    0m1.783s
+user    0m1.495s
+sys     0m0.164s
+
+Jerasure:
+$ time ./encoder f10M.dat 20 30 reed_sol_van 8 0 0
+Encoding (MB/sec): 7.1979900632
+En_Total (MB/sec): 6.9253836929
+
+real    0m1.308s
+user    0m1.246s
+sys     0m0.058s
+
+----------
+Data-Collection (from all non-systematic nodes)
+
+$ time ./collector_pmc coded_files/f10M.dat_metadata `for i in {20..39}; do { echo -n "$i "; }; done`
+n: 50, k: 20, d: 40, w: 8, alpha: 21, B: 420, MBR: 0
+file size: 10240000, msg_size: 10241280
+participating nodes: 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+Bytes read      : 10241280
+Bytes written   : 10240000
+Coding Time [s] : 6.618
+IO Time [s]     : 0.025
+
+real    0m6.657s
+user    0m6.611s
+sys     0m0.041s
+
+Jerasure:
+$ time ./decoder f10M.dat
+Decoding (MB/sec): 9.9393576195
+De_Total (MB/sec): 9.6453499425
+
+
+real    0m0.949s
+user    0m0.900s
+sys     0m0.036s
+
+------------
+Node repair (repairing systematic node 0, using 10 systematic and 30 non-systematic):
+
+$time sh -c " ./repair_pmc help 0 coded_files/f10M.dat_metadata `for i in {10..49}; do { echo -n "$i "; }; done` && ./repair_pmc fix 0 coded_files/f10M.dat_metadata `for i in {10..49}; do { echo -n "$i "; }; done`"
+n: 50, k: 20, d: 40, w: 8, alpha: 21, B: 420, MBR: 0
+msg_size: 10241280
+helper nodes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+Bytes read      : 20482560
+Bytes written   : 975360
+Coding Time [s] : 0.003
+IO Time [s]     : 0.020
+
+n: 50, k: 20, d: 40, w: 8, alpha: 21, B: 420, MBR: 0
+msg_size: 10241280
+helper nodes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+*** Repairing failed node 0...
+Bytes read      : 975360
+Bytes written   : 512064
+Coding Time [s] : 0.646
+IO Time [s]     : 0.009
+
+real    0m0.695s
+user    0m0.657s
+sys     0m0.035s
+
+
+
+MBR (n=50, k=20, d=40 → alpha=40, B = 610)
+===========================================
+Encoding (non-systematic):
+
+time ./encoder_pmc 50 20 40 8 MBR f10M.dat
+Bytes read      : 10240000
+Bytes written   : 33584000
+Coding Time [s] : 20.525
+IO Time [s]     : 0.515
+
+real    0m21.531s
+user    0m20.508s
+sys     0m0.541s
+
+
+Data-Collection:
+
+time ./collector_pmc coded_files/f10M.dat_metadata `for i in {20..39}; do { echo -n "$i "; }; done`
+n: 50, k: 20, d: 40, w: 8, alpha: 40, B: 610, MBR: 1
+file size: 10240000, msg_size: 10243120
+participating nodes: 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+Bytes read      : 13433600
+Bytes written   : 10240000
+Coding Time [s] : 12.857
+IO Time [s]     : 0.037
+
+real    0m12.921s
+user    0m12.839s
+sys     0m0.065s
+
+Repair:
+
+time sh -c " ./repair_pmc help 0 coded_files/f10M.dat_metadata `for i in {10..49}; do { echo -n "$i "; }; done` && ./repair_pmc fix 0 coded_files/f10M.dat_metadata `for i in {10..49}; do { echo -n "$i "; }; done`"
+n: 50, k: 20, d: 40, w: 8, alpha: 40, B: 610, MBR: 1
+msg_size: 10243120
+helper nodes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+Bytes read      : 26867200
+Bytes written   : 671680
+Coding Time [s] : 0.003
+IO Time [s]     : 0.031
+
+n: 50, k: 20, d: 40, w: 8, alpha: 40, B: 610, MBR: 1
+msg_size: 10243120
+helper nodes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+*** Repairing failed node 0...
+Bytes read      : 671680
+Bytes written   : 671680
+Coding Time [s] : 1.950
+IO Time [s]     : 0.011
+
+real    0m2.012s
+user    0m1.958s
+sys     0m0.050s

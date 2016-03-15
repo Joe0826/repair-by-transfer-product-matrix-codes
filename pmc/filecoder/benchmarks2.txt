@@ -1,0 +1,58 @@
+For 50Mb file.
+MSR (n = 18, k = 8, d = 14):
+
+ENCODING:
+
+$ time ./encoder_pmc 18 8 14 8 MSR f50M.dat
+using sparse precoder...
+Bytes read       : 51200000
+Bytes written    : 115200288
+Overhead [s]     : 0.004
+Precode only [s] : 2.487
+Coding Time [s]  : 4.821
+IO Time [s]      : 0.235
+
+real    0m5.267s
+user    0m4.636s
+sys     0m0.446s
+
+
+Jerasure:
+
+$ time ./encoder f50M.dat 8 10 reed_sol_van 8 0 0
+Encoding (MB/sec): 25.7533941253
+En_Total (MB/sec): 22.7029895087
+
+real    0m2.129s
+user    0m1.845s
+sys     0m0.260s
+
+
+
+DATA-COLLECTION:
+
+$ time ./collector_pmc coded_files/f50M.dat_metadata `for i in {8..15}; do { echo -n "$i "; }; done`
+n: 18, k: 8, d: 14, w: 8, alpha: 7, B: 56, MBR: 0
+file size: 51200000, msg_size: 51200128
+participating nodes: 8, 9, 10, 11, 12, 13, 14, 15,
+using sparse decoder plan...
+Bytes read       : 51200128
+Bytes written    : 51200000
+Overhead [s]     : 0.005
+Coding Time [s]  : 3.498
+IO Time [s]      : 0.138
+
+real    0m3.693s
+user    0m3.309s
+sys     0m0.355s
+
+Jerasure:
+
+$ rm Coding/f50M_k*
+$ time ./decoder f50M.dat
+Decoding (MB/sec): 30.1718100335
+De_Total (MB/sec): 27.6275225996
+
+real    0m1.752s
+user    0m1.576s
+sys     0m0.165s

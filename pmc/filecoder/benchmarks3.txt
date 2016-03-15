@@ -1,0 +1,95 @@
+MSR ENCODING:
+./encoder_pmc 20 10 19 8 MSR f50M.dat
+n: 20, k: 10, d: 19, w: 8, alpha: 10, B: 100, MBR: 0, RBT: 0
+file size: 51200000, msg_size: 51200000
+
+Bytes read       : 51200000
+Bytes written    : 102400000
+Overhead [s]     : 0.001
+Precode only [s] : 3.120
+Coding Time [s]  : 5.705
+IO Time [s]      : 0.261
+Total Time [s]   : 5.978
+
+MSR DECODING:
+./collector_pmc coded_files/f50M.dat_metadata
+n: 20, k: 10, d: 19, w: 8, alpha: 10, B: 100, MBR: 0, RBT: 0
+file size: 51200000, msg_size: 51200000
+participating nodes: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+
+Bytes read       : 51200000
+Bytes written    : 51200000
+Overhead [s]     : 0.001
+Coding Time [s]  : 4.317
+IO Time [s]      : 0.133
+
+MSR+RBT ENCODING:
+./encoder_pmc 20 10 19 8 MSR -rbt CYC f50M.dat
+n: 20, k: 10, d: 19, w: 8, alpha: 10, B: 100, MBR: 0, RBT: 2
+file size: 51200000, msg_size: 51200000
+
+Bytes read       : 51200000
+Bytes written    : 102400000
+Overhead [s]     : 0.002
+Precode only [s] : 3.856
+Coding Time [s]  : 7.902
+IO Time [s]      : 0.256
+Total Time [s]   : 8.172
+
+MSR+RBT DECODING:
+./collector_pmc coded_files/f50M.dat_metadata
+n: 20, k: 10, d: 19, w: 8, alpha: 10, B: 100, MBR: 0, RBT: 2
+file size: 51200000, msg_size: 51200000
+participating nodes: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+
+Bytes read       : 51200000
+Bytes written    : 51200000
+Overhead [s]     : 0.001
+Coding Time [s]  : 5.664
+IO Time [s]      : 0.142
+
+MBR ENCODING:
+./encoder_pmc 20 10 15 8 MBR f50M.dat
+n: 20, k: 10, d: 15, w: 8, alpha: 15, B: 105, MBR: 1, RBT: 0
+file size: 51200000, msg_size: 51200520
+Bytes read       : 51200000
+Bytes written    : 146287200
+Overhead [s]     : 0.001
+Precode only [s] : 0.000
+Coding Time [s]  : 1.614
+IO Time [s]      : 0.377
+Total Time [s]   : 2.001
+
+MBR DECODING:
+./collector_pmc coded_files/f50M.dat_metadata `seq -s " " 10 19`
+n: 20, k: 10, d: 15, w: 8, alpha: 15, B: 105, MBR: 1, RBT: 0
+file size: 51200000, msg_size: 51200520
+participating nodes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+Bytes read       : 73143600
+Bytes written    : 51200000
+Overhead [s]     : 0.001
+Coding Time [s]  : 1.515
+IO Time [s]      : 0.165
+
+MBR+RBT ENCODING:
+./encoder_pmc 20 10 15 8 MBR -rbt CYC f50M.dat
+n: 20, k: 10, d: 15, w: 8, alpha: 15, B: 105, MBR: 1, RBT: 2
+file size: 51200000, msg_size: 51200520
+Bytes read       : 51200000
+Bytes written    : 146287200
+Overhead [s]     : 0.006
+Precode only [s] : 0.658
+Coding Time [s]  : 4.096
+IO Time [s]      : 0.378
+Total Time [s]   : 4.490
+
+MBR+RBT DECODING:
+./collector_pmc coded_files/f50M.dat_metadata `seq -s " " 10 19`
+n: 20, k: 10, d: 15, w: 8, alpha: 15, B: 105, MBR: 1, RBT: 2
+file size: 51200000, msg_size: 51200520
+participating nodes: 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+Bytes read       : 73143600
+Bytes written    : 51200000
+Overhead [s]     : 0.008
+Coding Time [s]  : 2.851
+IO Time [s]      : 0.174

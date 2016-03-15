@@ -1,0 +1,20 @@
+Format of the meta-data file stored by the PMC encoder:
+=======================================================
+full file name
+file size
+message size (padded file size)
+n
+k
+d
+a
+B
+w
+0 if MSR, 1 if MBR
+0 if RBT_NONE, 1 if RBT_SYS, 2 if RBT_CYC
+
+Format of the meta-data file of network (pmc_server/pmc_client)
+===============================================================
+0 host0 port
+1 host1 port
+...
+id hostId port
